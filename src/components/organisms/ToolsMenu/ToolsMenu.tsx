@@ -80,6 +80,30 @@ const PDF_TOOLS: ToolEntry[] = [
   { href: "/tools/pdf-to-png", title: "PDF to PNG", description: "Ubah tiap halaman PDF jadi PNG." },
 ];
 
+const DEVELOPER_TOOLS: ToolEntry[] = [
+  { href: "/tools/json-to-typescript", title: "JSON to TypeScript", description: "Buat interface TS dari JSON." },
+  { href: "/tools/json-formatter", title: "JSON Formatter", description: "Rapikan JSON." },
+  { href: "/tools/json-validator", title: "JSON Validator", description: "Cek validitas JSON." },
+  { href: "/tools/xml-formatter", title: "XML Formatter", description: "Rapikan XML." },
+  { href: "/tools/html-formatter", title: "HTML Formatter", description: "Rapikan HTML." },
+  { href: "/tools/css-formatter", title: "CSS Formatter", description: "Rapikan CSS." },
+  { href: "/tools/javascript-formatter", title: "JavaScript Formatter", description: "Rapikan JavaScript." },
+  { href: "/tools/sql-formatter", title: "SQL Formatter", description: "Rapikan query SQL." },
+  { href: "/tools/base64-encode", title: "Base64 Encode", description: "Teks ke Base64." },
+  { href: "/tools/base64-decode", title: "Base64 Decode", description: "Base64 ke teks." },
+  { href: "/tools/url-encode", title: "URL Encode", description: "Encode teks untuk URL." },
+  { href: "/tools/url-decode", title: "URL Decode", description: "Decode URL-encoded string." },
+  { href: "/tools/jwt-decoder", title: "JWT Decoder", description: "Decode header & payload JWT." },
+  { href: "/tools/random-uuid", title: "UUID Generator", description: "UUID v4 acak." },
+  { href: "/tools/timestamp-converter", title: "Timestamp Converter", description: "Epoch ke tanggal & sebaliknya." },
+  { href: "/tools/unix-time-converter", title: "Unix Time Converter", description: "Unix time ke tanggal & sebaliknya." },
+  { href: "/tools/hash-generator", title: "Hash Generator", description: "MD5, SHA-1, SHA-256." },
+  { href: "/tools/regex-tester", title: "Regex Tester", description: "Uji regular expression." },
+  { href: "/tools/color-picker", title: "Color Picker", description: "Pilih warna, lihat HEX/RGB/HSL." },
+  { href: "/tools/hex-rgb-converter", title: "HEX ↔ RGB Converter", description: "Konversi HEX dan RGB." },
+  { href: "/tools/css-gradient-generator", title: "CSS Gradient Generator", description: "Buat CSS gradient." },
+];
+
 function ToolGrid({ tools }: { tools: ToolEntry[] }) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -141,6 +165,12 @@ export default function ToolsMenu() {
           Diproses langsung di browser kamu, PDF tidak diunggah ke server manapun.
         </p>
         <ToolGrid tools={PDF_TOOLS} />
+      </section>
+      <section>
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          Developer Tools
+        </h2>
+        <ToolGrid tools={DEVELOPER_TOOLS} />
       </section>
     </div>
   );
