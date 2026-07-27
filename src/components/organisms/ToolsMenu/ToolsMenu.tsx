@@ -67,6 +67,19 @@ const IMAGE_TOOLS: ToolEntry[] = [
   { href: "/tools/convert-webp-to-png", title: "Convert WebP → PNG", description: "Ubah WebP menjadi PNG." },
 ];
 
+const PDF_TOOLS: ToolEntry[] = [
+  { href: "/tools/merge-pdf", title: "Merge PDF", description: "Gabungkan beberapa PDF jadi satu." },
+  { href: "/tools/split-pdf", title: "Split PDF", description: "Pisahkan tiap halaman jadi file sendiri." },
+  { href: "/tools/compress-pdf", title: "Compress PDF", description: "Perkecil ukuran file PDF." },
+  { href: "/tools/rotate-pdf", title: "Rotate PDF", description: "Putar halaman PDF." },
+  { href: "/tools/extract-pdf-pages", title: "Extract PDF Pages", description: "Ambil halaman tertentu jadi PDF baru." },
+  { href: "/tools/delete-pdf-pages", title: "Delete PDF Pages", description: "Hapus halaman tertentu dari PDF." },
+  { href: "/tools/rearrange-pdf-pages", title: "Rearrange PDF Pages", description: "Ubah urutan halaman PDF." },
+  { href: "/tools/image-to-pdf", title: "Image to PDF", description: "Gabungkan gambar jadi satu PDF." },
+  { href: "/tools/pdf-to-jpg", title: "PDF to JPG", description: "Ubah tiap halaman PDF jadi JPG." },
+  { href: "/tools/pdf-to-png", title: "PDF to PNG", description: "Ubah tiap halaman PDF jadi PNG." },
+];
+
 function ToolGrid({ tools }: { tools: ToolEntry[] }) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -119,6 +132,15 @@ export default function ToolsMenu() {
           Diproses langsung di browser kamu, gambar tidak diunggah ke server manapun.
         </p>
         <ToolGrid tools={IMAGE_TOOLS} />
+      </section>
+      <section>
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          PDF Tools
+        </h2>
+        <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">
+          Diproses langsung di browser kamu, PDF tidak diunggah ke server manapun.
+        </p>
+        <ToolGrid tools={PDF_TOOLS} />
       </section>
     </div>
   );
