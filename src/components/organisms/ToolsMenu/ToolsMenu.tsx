@@ -55,6 +55,18 @@ const GENERATOR_TOOLS: ToolEntry[] = [
   { href: "/tools/dice-roller", title: "Dice Roller", description: "Lempar dadu virtual." },
 ];
 
+const IMAGE_TOOLS: ToolEntry[] = [
+  { href: "/tools/compress-jpg", title: "Compress JPG", description: "Perkecil ukuran file JPG." },
+  { href: "/tools/compress-png", title: "Compress PNG", description: "Perkecil ukuran file PNG." },
+  { href: "/tools/resize-image", title: "Resize Image", description: "Ubah ukuran gambar JPG/PNG/WebP." },
+  { href: "/tools/convert-jpg-to-png", title: "Convert JPG → PNG", description: "Ubah JPG menjadi PNG." },
+  { href: "/tools/convert-png-to-jpg", title: "Convert PNG → JPG", description: "Ubah PNG menjadi JPG." },
+  { href: "/tools/convert-jpg-to-webp", title: "Convert JPG → WebP", description: "Ubah JPG menjadi WebP." },
+  { href: "/tools/convert-png-to-webp", title: "Convert PNG → WebP", description: "Ubah PNG menjadi WebP." },
+  { href: "/tools/convert-webp-to-jpg", title: "Convert WebP → JPG", description: "Ubah WebP menjadi JPG." },
+  { href: "/tools/convert-webp-to-png", title: "Convert WebP → PNG", description: "Ubah WebP menjadi PNG." },
+];
+
 function ToolGrid({ tools }: { tools: ToolEntry[] }) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -98,6 +110,15 @@ export default function ToolsMenu() {
           Generator
         </h2>
         <ToolGrid tools={GENERATOR_TOOLS} />
+      </section>
+      <section>
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          Image Tools
+        </h2>
+        <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">
+          Diproses langsung di browser kamu, gambar tidak diunggah ke server manapun.
+        </p>
+        <ToolGrid tools={IMAGE_TOOLS} />
       </section>
     </div>
   );
