@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Force light theme everywhere — ignore OS/browser dark-mode preference */
+@variant dark (&:where(.force-dark, .force-dark *));
+
 html,
 body {
   font-family: system-ui, -apple-system, sans-serif;

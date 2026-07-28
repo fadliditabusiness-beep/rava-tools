@@ -5,18 +5,20 @@ import SiteFooter from "@/components/organisms/SiteFooter/SiteFooter";
 export interface ToolsPageTemplateProps {
   title: string;
   description?: string;
+  wide?: boolean;
   children: ReactNode;
 }
 
 export default function ToolsPageTemplate({
   title,
   description,
+  wide = false,
   children,
 }: ToolsPageTemplateProps) {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <SiteHeader />
-      <main className="mx-auto max-w-4xl px-4 py-8">
+      <main className={`mx-auto px-4 py-8 ${wide ? "max-w-6xl" : "max-w-4xl"}`}>
         <h1 className="text-center text-2xl font-bold text-slate-900 dark:text-slate-50">
           {title}
         </h1>

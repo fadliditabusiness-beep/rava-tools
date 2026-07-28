@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import MainNav from "@/components/molecules/MainNav/MainNav";
 
 export interface SiteHeaderProps {
@@ -8,14 +9,21 @@ export interface SiteHeaderProps {
 
 export default function SiteHeader({ children }: SiteHeaderProps) {
   return (
-    <header className="border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
+    <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-6">
         <div className="flex w-full items-center justify-between">
-          <Link
-            href="/"
-            className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-50"
-          >
-            Kalender Indonesia
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/assets/rava-tools.png"
+              alt="Rava"
+              width={48}
+              height={48}
+              className="h-10 w-10 object-contain"
+              priority
+            />
+            <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-lg font-bold tracking-tight text-transparent dark:from-blue-400 dark:to-violet-400">
+              Rava
+            </span>
           </Link>
           <MainNav />
         </div>
