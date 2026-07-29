@@ -12,7 +12,8 @@ export type ToolAccent =
   | "rose"
   | "orange"
   | "indigo"
-  | "teal";
+  | "teal"
+  | "fuchsia";
 
 export interface ToolCategory {
   id: string;
@@ -178,6 +179,22 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
       { href: "/tools/decision-maker", title: "Decision Maker", description: "Bingung milih? Masukin pilihan, biar diacak." },
     ],
   },
+  {
+    id: "video-tools",
+    title: "Video Tools",
+    icon: "🎬",
+    accent: "fuchsia",
+    note: "Diproses langsung di browser kamu (ffmpeg.wasm), video tidak diunggah ke server manapun. Mesin video (~30MB) diunduh sekali saat konversi pertama.",
+    tools: [
+      { href: "/tools/convert-mp4-to-webm", title: "Convert MP4 → WebM", description: "Ubah video MP4 menjadi WebM." },
+      { href: "/tools/convert-webm-to-mp4", title: "Convert WebM → MP4", description: "Ubah video WebM menjadi MP4." },
+      { href: "/tools/convert-mov-to-mp4", title: "Convert MOV → MP4", description: "Ubah video MOV menjadi MP4." },
+      { href: "/tools/convert-avi-to-mp4", title: "Convert AVI → MP4", description: "Ubah video AVI menjadi MP4." },
+      { href: "/tools/convert-mkv-to-mp4", title: "Convert MKV → MP4", description: "Ubah video MKV menjadi MP4." },
+      { href: "/tools/convert-gif-to-mp4", title: "Convert GIF → MP4", description: "Ubah GIF menjadi video MP4." },
+      { href: "/tools/convert-mp4-to-gif", title: "Convert MP4 → GIF", description: "Ubah video MP4 menjadi GIF." },
+    ],
+  },
 ];
 
 export const TOTAL_TOOL_COUNT = TOOL_CATEGORIES.reduce((sum, cat) => sum + cat.tools.length, 0);
@@ -246,5 +263,12 @@ export const ACCENT_STYLES: Record<ToolAccent, AccentStyle> = {
     pillActive: "bg-teal-600 border-teal-600 text-white dark:bg-teal-500 dark:border-teal-500",
     cardLeftBorder: "border-l-teal-400 dark:border-l-teal-600",
     cardHoverBorder: "hover:border-teal-400 dark:hover:border-teal-500",
+  },
+  fuchsia: {
+    chip: "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-950/50 dark:text-fuchsia-300",
+    pill: "border-fuchsia-200 text-fuchsia-700 hover:bg-fuchsia-50 dark:border-fuchsia-900 dark:text-fuchsia-300 dark:hover:bg-fuchsia-950/40",
+    pillActive: "bg-fuchsia-600 border-fuchsia-600 text-white dark:bg-fuchsia-500 dark:border-fuchsia-500",
+    cardLeftBorder: "border-l-fuchsia-400 dark:border-l-fuchsia-600",
+    cardHoverBorder: "hover:border-fuchsia-400 dark:hover:border-fuchsia-500",
   },
 };
