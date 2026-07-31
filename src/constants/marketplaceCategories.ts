@@ -22,6 +22,11 @@ export const MARKETPLACE_CATEGORIES: MegaCategoryGroup[] = [
             "/tools/marketplace-profit-pricing-calculator",
             "Dashboard hitung HPP, profit, margin, markup, ROI, & laba bersih semua produk marketplace sekaligus.",
           ),
+          live(
+            "Material & Product Cost Calculator",
+            "/tools/material-product-cost-calculator",
+            "Kelola bahan baku & hitung HPP produk otomatis pakai konsep Bill of Materials (BOM).",
+          ),
           live("HPP Calculator", "/tools/hpp-calculator", "Hitung harga pokok produksi per unit."),
           live("Selling Price Calculator", "/tools/selling-price-calculator", "Hitung harga jual dari HPP & target margin."),
           live("Profit Calculator", "/tools/profit-calculator", "Hitung profit dari harga jual & modal."),
