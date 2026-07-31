@@ -41,7 +41,7 @@ export default function ProductCard({
   onRemoveMaterial,
 }: ProductCardProps) {
   return (
-    <div className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5">
+    <div className="@container flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-500">
@@ -103,7 +103,7 @@ export default function ProductCard({
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-2 border-t border-slate-100 pt-4 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 @sm:grid-cols-3 @3xl:grid-cols-4 @5xl:grid-cols-5">
         <StatTile label="Material Cost" value={formatRupiah(result.materialCost)} />
         <StatTile label="Packing Cost" value={formatRupiah(result.packingCost)} />
         <StatTile label="Other Cost" value={formatRupiah(result.otherCost)} />

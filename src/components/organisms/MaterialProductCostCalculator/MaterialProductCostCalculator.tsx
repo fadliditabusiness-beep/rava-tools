@@ -27,8 +27,8 @@ export default function MaterialProductCostCalculator() {
   } = useMaterialProductCostCalculator();
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+    <div className="flex flex-col gap-8">
+      <div className="grid grid-cols-1 items-start gap-8 xl:grid-cols-2">
         <MaterialsSection
           items={materialsWithResults}
           onAdd={addMaterial}
