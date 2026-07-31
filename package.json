@@ -13,6 +13,7 @@
     "@ffmpeg/util": "0.12.2",
     "@types/md5": "^2.3.6",
     "browser-image-compression": "^2.0.2",
+    "chart.js": "^4.5.1",
     "jsbarcode": "^3.12.3",
     "jszip": "^3.10.1",
     "md5": "^2.3.0",
@@ -22,8 +23,10 @@
     "prettier": "^3.9.6",
     "qrcode": "^1.5.4",
     "react": "19.2.4",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.4",
-    "sql-formatter": "^15.8.2"
+    "sql-formatter": "^15.8.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
