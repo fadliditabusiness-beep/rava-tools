@@ -109,6 +109,40 @@ export const VIDEO_CONVERSIONS: VideoConversionSpec[] = [
   },
 ];
 
+export interface VideoCompressOptions {
+  crf: number;
+  maxHeight?: number;
+}
+
+export function buildCompressArgs(inputName: string, outputName: string, options: VideoCompressOptions): string[] {
+  const args = ["-i", inputName, "-c:v", "libx264", "-preset", "ultrafast", "-crf", String(options.crf)];
+  if (options.maxHeight) {
+    args.push("-vf", `scale=-2:'min(ih,${options.maxHeight})'`);
+  }
+  args.push("-c:a", "aac", "-b:a", "128k", "-pix_fmt", "yuv420p", outputName);
+  return args;
+}
+
+export async function compressVideo(ffmpeg: FFmpeg, file: File, options: VideoCompressOptions): Promise<Blob> {
+  const inputName = `input-${Date.now()}.${file.name.split(".").pop() ?? "bin"}`;
+  const outputName = `output-${Date.now()}.mp4`;
+
+  await ffmpeg.writeFile(inputName, new Uint8Array(await file.arrayBuffer()));
+  await ffmpeg.exec(buildCompressArgs(inputName, outputName, options));
+  const data = await ffmpeg.readFile(outputName);
+  const bytes = data as Uint8Array;
+
+  for (const name of [inputName, outputName]) {
+    try {
+      await ffmpeg.deleteFile(name);
+    } catch {
+      // ignore missing files
+    }
+  }
+
+  return new Blob([bytes.buffer as ArrayBuffer], { type: "video/mp4" });
+}
+
 export async function convertVideo(
   ffmpeg: FFmpeg,
   file: File,

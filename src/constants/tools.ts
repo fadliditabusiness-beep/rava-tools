@@ -13,7 +13,8 @@ export type ToolAccent =
   | "orange"
   | "indigo"
   | "teal"
-  | "fuchsia";
+  | "fuchsia"
+  | "cyan";
 
 export interface ToolCategory {
   id: string;
@@ -186,6 +187,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
     accent: "fuchsia",
     note: "Diproses langsung di browser kamu (ffmpeg.wasm), video tidak diunggah ke server manapun. Mesin video (~30MB) diunduh sekali saat konversi pertama.",
     tools: [
+      { href: "/tools/compress-video", title: "Compress Video", description: "Perkecil ukuran file video." },
       { href: "/tools/convert-mp4-to-webm", title: "Convert MP4 → WebM", description: "Ubah video MP4 menjadi WebM." },
       { href: "/tools/convert-webm-to-mp4", title: "Convert WebM → MP4", description: "Ubah video WebM menjadi MP4." },
       { href: "/tools/convert-mov-to-mp4", title: "Convert MOV → MP4", description: "Ubah video MOV menjadi MP4." },
@@ -193,6 +195,19 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
       { href: "/tools/convert-mkv-to-mp4", title: "Convert MKV → MP4", description: "Ubah video MKV menjadi MP4." },
       { href: "/tools/convert-gif-to-mp4", title: "Convert GIF → MP4", description: "Ubah GIF menjadi video MP4." },
       { href: "/tools/convert-mp4-to-gif", title: "Convert MP4 → GIF", description: "Ubah video MP4 menjadi GIF." },
+    ],
+  },
+  {
+    id: "downloader-tools",
+    title: "Downloader Tools",
+    icon: "📥",
+    accent: "cyan",
+    note: "Diproses langsung di browser kamu. Kalau server sumber file memblokir akses lintas domain (CORS), link akan dibuka di tab baru sebagai gantinya.",
+    tools: [
+      { href: "/tools/download-file-url", title: "Download File dari URL", description: "Unduh file apa pun langsung dari URL-nya." },
+      { href: "/tools/download-image-url", title: "Download Gambar dari URL", description: "Unduh gambar langsung dari URL-nya." },
+      { href: "/tools/download-video-url", title: "Download Video dari URL Langsung", description: "Unduh video (.mp4, .webm) dari URL file-nya." },
+      { href: "/tools/download-audio-url", title: "Download Audio dari URL Langsung", description: "Unduh audio langsung dari URL file-nya." },
     ],
   },
 ];
@@ -270,5 +285,12 @@ export const ACCENT_STYLES: Record<ToolAccent, AccentStyle> = {
     pillActive: "bg-fuchsia-600 border-fuchsia-600 text-white dark:bg-fuchsia-500 dark:border-fuchsia-500",
     cardLeftBorder: "border-l-fuchsia-400 dark:border-l-fuchsia-600",
     cardHoverBorder: "hover:border-fuchsia-400 dark:hover:border-fuchsia-500",
+  },
+  cyan: {
+    chip: "bg-cyan-100 text-cyan-700 dark:bg-cyan-950/50 dark:text-cyan-300",
+    pill: "border-cyan-200 text-cyan-700 hover:bg-cyan-50 dark:border-cyan-900 dark:text-cyan-300 dark:hover:bg-cyan-950/40",
+    pillActive: "bg-cyan-600 border-cyan-600 text-white dark:bg-cyan-500 dark:border-cyan-500",
+    cardLeftBorder: "border-l-cyan-400 dark:border-l-cyan-600",
+    cardHoverBorder: "hover:border-cyan-400 dark:hover:border-cyan-500",
   },
 };
