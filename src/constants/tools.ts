@@ -14,7 +14,9 @@ export type ToolAccent =
   | "indigo"
   | "teal"
   | "fuchsia"
-  | "cyan";
+  | "cyan"
+  | "pink"
+  | "lime";
 
 export interface ToolCategory {
   id: string;
@@ -210,6 +212,37 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
       { href: "/tools/download-audio-url", title: "Download Audio dari URL Langsung", description: "Unduh audio langsung dari URL file-nya." },
     ],
   },
+  {
+    id: "social-media-tools",
+    title: "Social Media Tools",
+    icon: "📱",
+    accent: "pink",
+    tools: [
+      { href: "/tools/instagram-caption-counter", title: "Instagram Caption Counter", description: "Cek jumlah karakter & hashtag caption Instagram." },
+      { href: "/tools/tiktok-caption-counter", title: "TikTok Caption Counter", description: "Cek jumlah karakter & hashtag caption TikTok." },
+      { href: "/tools/youtube-tag-generator", title: "YouTube Tag Generator", description: "Buat daftar tag YouTube dari judul & kata kunci." },
+      { href: "/tools/hashtag-generator", title: "Hashtag Generator", description: "Buat hashtag dari kata kunci atau topik." },
+      { href: "/tools/emoji-picker", title: "Emoji Picker", description: "Cari & salin emoji dengan cepat." },
+      { href: "/tools/social-media-image-size-guide", title: "Social Media Image Size Guide", description: "Ukuran gambar rekomendasi tiap platform." },
+    ],
+  },
+  {
+    id: "seo-tools",
+    title: "SEO Tools",
+    icon: "🔍",
+    accent: "lime",
+    tools: [
+      { href: "/tools/meta-tag-generator", title: "Meta Tag Generator", description: "Buat tag meta HTML dasar untuk SEO." },
+      { href: "/tools/open-graph-generator", title: "Open Graph Generator", description: "Buat tag Open Graph untuk preview link." },
+      { href: "/tools/twitter-card-generator", title: "Twitter Card Generator", description: "Buat tag Twitter Card untuk preview link." },
+      { href: "/tools/robots-txt-generator", title: "robots.txt Generator", description: "Atur akses crawler mesin pencari." },
+      { href: "/tools/sitemap-xml-generator", title: "sitemap.xml Generator", description: "Buat sitemap.xml dari daftar URL." },
+      { href: "/tools/canonical-tag-generator", title: "Canonical Tag Generator", description: "Hindari duplicate content." },
+      { href: "/tools/json-ld-generator", title: "JSON-LD Generator", description: "Buat structured data schema.org." },
+      { href: "/tools/faq-schema-generator", title: "FAQ Schema Generator", description: "Buat structured data FAQPage." },
+      { href: "/tools/breadcrumb-schema-generator", title: "Breadcrumb Schema Generator", description: "Buat structured data BreadcrumbList." },
+    ],
+  },
 ];
 
 export const TOTAL_TOOL_COUNT = TOOL_CATEGORIES.reduce((sum, cat) => sum + cat.tools.length, 0);
@@ -292,5 +325,19 @@ export const ACCENT_STYLES: Record<ToolAccent, AccentStyle> = {
     pillActive: "bg-cyan-600 border-cyan-600 text-white dark:bg-cyan-500 dark:border-cyan-500",
     cardLeftBorder: "border-l-cyan-400 dark:border-l-cyan-600",
     cardHoverBorder: "hover:border-cyan-400 dark:hover:border-cyan-500",
+  },
+  pink: {
+    chip: "bg-pink-100 text-pink-700 dark:bg-pink-950/50 dark:text-pink-300",
+    pill: "border-pink-200 text-pink-700 hover:bg-pink-50 dark:border-pink-900 dark:text-pink-300 dark:hover:bg-pink-950/40",
+    pillActive: "bg-pink-600 border-pink-600 text-white dark:bg-pink-500 dark:border-pink-500",
+    cardLeftBorder: "border-l-pink-400 dark:border-l-pink-600",
+    cardHoverBorder: "hover:border-pink-400 dark:hover:border-pink-500",
+  },
+  lime: {
+    chip: "bg-lime-100 text-lime-700 dark:bg-lime-950/50 dark:text-lime-300",
+    pill: "border-lime-200 text-lime-700 hover:bg-lime-50 dark:border-lime-900 dark:text-lime-300 dark:hover:bg-lime-950/40",
+    pillActive: "bg-lime-600 border-lime-600 text-white dark:bg-lime-500 dark:border-lime-500",
+    cardLeftBorder: "border-l-lime-400 dark:border-l-lime-600",
+    cardHoverBorder: "hover:border-lime-400 dark:hover:border-lime-500",
   },
 };
