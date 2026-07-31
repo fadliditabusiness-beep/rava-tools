@@ -44,9 +44,8 @@ function buildFinancialSummary(items: ProductWithResult[]): FinancialSummary {
   let totalAdmin = 0;
 
   for (const { product, result } of items) {
-    const hargaSetelahDiskon = product.sellPrice - result.discountAmount;
     totalModal += result.totalModal;
-    totalPenjualan += hargaSetelahDiskon;
+    totalPenjualan += result.hargaSetelahDiskon;
     totalProfit += result.netIncome;
     totalBiaya += result.totalBiaya;
     totalPotongan += result.totalPotongan;

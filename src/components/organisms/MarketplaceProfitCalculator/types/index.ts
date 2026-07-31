@@ -21,6 +21,8 @@ export interface ProductResult {
   totalModal: number;
   totalBiaya: number;
   discountAmount: number;
+  hargaSebelumDiskon: number;
+  hargaSetelahDiskon: number;
   feeAmount: number;
   totalPotongan: number;
   hargaBersih: number;

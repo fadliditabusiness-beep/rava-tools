@@ -88,6 +88,8 @@ export function exportToExcel(items: ProductWithResult[], summary: BusinessSumma
     HPP: result.hpp,
     "Total Modal": result.totalModal,
     "Total Biaya": result.totalBiaya,
+    "Harga Sebelum Diskon": result.hargaSebelumDiskon,
+    "Harga Setelah Diskon": result.hargaSetelahDiskon,
     "Total Potongan": result.totalPotongan,
     "Harga Bersih": result.hargaBersih,
     Profit: result.profit,

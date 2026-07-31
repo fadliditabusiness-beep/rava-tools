@@ -85,6 +85,17 @@ export default function ProductCard({ index, product, result, onChange, onDuplic
         </label>
       </div>
 
+      <div className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
+        <div>
+          <div className="text-xs text-slate-500">Harga Tampil di Platform</div>
+          <div className="mt-1 flex items-baseline gap-2">
+            {product.discountPercent > 0 && <span className="text-sm text-slate-400 line-through">{formatRupiah(result.hargaSebelumDiskon)}</span>}
+            <span className="text-lg font-bold text-slate-900">{formatRupiah(result.hargaSetelahDiskon)}</span>
+            {product.discountPercent > 0 && <Badge tone="red">-{formatPercent(product.discountPercent)}</Badge>}
+          </div>
+        </div>
+      </div>
+
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-blue-100 bg-blue-50 px-4 py-3">
         <div>
           <div className="text-xs text-blue-700">Rekomendasi Harga Jual (Target Margin {formatPercent(product.targetMarginPercent)})</div>

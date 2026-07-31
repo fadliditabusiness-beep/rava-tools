@@ -61,6 +61,8 @@ export function calculateProduct(product: Product): ProductResult {
     totalModal,
     totalBiaya,
     discountAmount,
+    hargaSebelumDiskon: sellPrice,
+    hargaSetelahDiskon,
     feeAmount,
     totalPotongan,
     hargaBersih,
