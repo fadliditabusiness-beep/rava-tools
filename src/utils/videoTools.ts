@@ -16,6 +16,19 @@ const H264_MP4_ARGS = (inputName: string, outputName: string) => [
   ["-i", inputName, "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-c:a", "aac", "-b:a", "128k", "-pix_fmt", "yuv420p", outputName],
 ];
 
+const buildGifSteps = (inputName: string, outputName: string) => [
+  ["-i", inputName, "-vf", "fps=10,scale=480:-1:flags=lanczos,palettegen", "palette.png"],
+  [
+    "-i",
+    inputName,
+    "-i",
+    "palette.png",
+    "-filter_complex",
+    "fps=10,scale=480:-1:flags=lanczos[x];[x][1:v]paletteuse",
+    outputName,
+  ],
+];
+
 export const VIDEO_CONVERSIONS: VideoConversionSpec[] = [
   {
     id: "mp4-to-webm",
@@ -94,17 +107,90 @@ export const VIDEO_CONVERSIONS: VideoConversionSpec[] = [
     outputMime: "image/gif",
     isGifOutput: true,
     intermediateFiles: ["palette.png"],
+    buildSteps: (inputName, outputName) => buildGifSteps(inputName, outputName),
+  },
+  {
+    id: "webm-to-gif",
+    fromLabel: "WebM",
+    toLabel: "GIF",
+    accept: "video/webm,.webm",
+    outputExt: "gif",
+    outputMime: "image/gif",
+    isGifOutput: true,
+    intermediateFiles: ["palette.png"],
+    buildSteps: (inputName, outputName) => buildGifSteps(inputName, outputName),
+  },
+  {
+    id: "mov-to-gif",
+    fromLabel: "MOV",
+    toLabel: "GIF",
+    accept: "video/quicktime,.mov",
+    outputExt: "gif",
+    outputMime: "image/gif",
+    isGifOutput: true,
+    intermediateFiles: ["palette.png"],
+    buildSteps: (inputName, outputName) => buildGifSteps(inputName, outputName),
+  },
+  {
+    id: "avi-to-gif",
+    fromLabel: "AVI",
+    toLabel: "GIF",
+    accept: "video/x-msvideo,.avi",
+    outputExt: "gif",
+    outputMime: "image/gif",
+    isGifOutput: true,
+    intermediateFiles: ["palette.png"],
+    buildSteps: (inputName, outputName) => buildGifSteps(inputName, outputName),
+  },
+  {
+    id: "video-to-gif",
+    fromLabel: "Video",
+    toLabel: "GIF",
+    accept: "video/*",
+    outputExt: "gif",
+    outputMime: "image/gif",
+    isGifOutput: true,
+    intermediateFiles: ["palette.png"],
+    buildSteps: (inputName, outputName) => buildGifSteps(inputName, outputName),
+  },
+  {
+    id: "apng-to-gif",
+    fromLabel: "APNG",
+    toLabel: "GIF",
+    accept: "image/apng,.apng,.png",
+    outputExt: "gif",
+    outputMime: "image/gif",
+    isGifOutput: true,
+    intermediateFiles: ["palette.png"],
+    buildSteps: (inputName, outputName) => buildGifSteps(inputName, outputName),
+  },
+  {
+    id: "gif-to-apng",
+    fromLabel: "GIF",
+    toLabel: "APNG",
+    accept: "image/gif,.gif",
+    outputExt: "apng",
+    outputMime: "image/apng",
+    buildSteps: (inputName, outputName) => [["-i", inputName, "-plays", "0", outputName]],
+  },
+  {
+    id: "video-to-mp4",
+    fromLabel: "Video",
+    toLabel: "MP4",
+    accept: "video/*",
+    outputExt: "mp4",
+    outputMime: "video/mp4",
+    buildSteps: H264_MP4_ARGS,
+  },
+  {
+    id: "video-to-webm",
+    fromLabel: "Video",
+    toLabel: "WebM",
+    accept: "video/*",
+    outputExt: "webm",
+    outputMime: "video/webm",
     buildSteps: (inputName, outputName) => [
-      ["-i", inputName, "-vf", "fps=10,scale=480:-1:flags=lanczos,palettegen", "palette.png"],
-      [
-        "-i",
-        inputName,
-        "-i",
-        "palette.png",
-        "-filter_complex",
-        "fps=10,scale=480:-1:flags=lanczos[x];[x][1:v]paletteuse",
-        outputName,
-      ],
+      ["-i", inputName, "-c:v", "libvpx", "-b:v", "1M", "-c:a", "libvorbis", outputName],
     ],
   },
 ];
@@ -141,6 +227,189 @@ export async function compressVideo(ffmpeg: FFmpeg, file: File, options: VideoCo
   }
 
   return new Blob([bytes.buffer as ArrayBuffer], { type: "video/mp4" });
+}
+
+export interface VideoCropOptions {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export async function cropVideo(ffmpeg: FFmpeg, file: File, options: VideoCropOptions): Promise<Blob> {
+  const inputName = `input-${Date.now()}.${file.name.split(".").pop() ?? "bin"}`;
+  const outputName = `output-${Date.now()}.mp4`;
+
+  await ffmpeg.writeFile(inputName, new Uint8Array(await file.arrayBuffer()));
+  await ffmpeg.exec([
+    "-i",
+    inputName,
+    "-vf",
+    `crop=${options.width}:${options.height}:${options.x}:${options.y}`,
+    "-c:a",
+    "copy",
+    outputName,
+  ]);
+  const data = await ffmpeg.readFile(outputName);
+  const bytes = data as Uint8Array;
+
+  for (const name of [inputName, outputName]) {
+    try {
+      await ffmpeg.deleteFile(name);
+    } catch {
+      // ignore missing files
+    }
+  }
+
+  return new Blob([bytes.buffer as ArrayBuffer], { type: "video/mp4" });
+}
+
+export interface VideoTrimOptions {
+  startSeconds: number;
+  endSeconds: number;
+}
+
+export async function trimVideo(ffmpeg: FFmpeg, file: File, options: VideoTrimOptions): Promise<Blob> {
+  const inputName = `input-${Date.now()}.${file.name.split(".").pop() ?? "bin"}`;
+  const outputName = `output-${Date.now()}.mp4`;
+  const duration = Math.max(0, options.endSeconds - options.startSeconds);
+
+  await ffmpeg.writeFile(inputName, new Uint8Array(await file.arrayBuffer()));
+  await ffmpeg.exec([
+    "-ss",
+    String(options.startSeconds),
+    "-i",
+    inputName,
+    "-t",
+    String(duration),
+    "-c:v",
+    "libx264",
+    "-preset",
+    "ultrafast",
+    "-crf",
+    "23",
+    "-c:a",
+    "aac",
+    "-b:a",
+    "128k",
+    "-pix_fmt",
+    "yuv420p",
+    outputName,
+  ]);
+  const data = await ffmpeg.readFile(outputName);
+  const bytes = data as Uint8Array;
+
+  for (const name of [inputName, outputName]) {
+    try {
+      await ffmpeg.deleteFile(name);
+    } catch {
+      // ignore missing files
+    }
+  }
+
+  return new Blob([bytes.buffer as ArrayBuffer], { type: "video/mp4" });
+}
+
+export async function imagesToGif(ffmpeg: FFmpeg, files: File[], fps: number): Promise<Blob> {
+  const timestamp = Date.now();
+  const frameDuration = 1 / fps;
+  const frameNames = files.map((file, i) => `frame-${timestamp}-${i}.${file.name.split(".").pop() || "png"}`);
+  const listName = `list-${timestamp}.txt`;
+  const paletteName = `palette-${timestamp}.png`;
+  const outputName = `output-${timestamp}.gif`;
+
+  for (let i = 0; i < files.length; i++) {
+    await ffmpeg.writeFile(frameNames[i], new Uint8Array(await files[i].arrayBuffer()));
+  }
+
+  // concat demuxer decodes each listed file by its own extension, so mixed image formats are fine —
+  // unlike ffmpeg's "-framerate -i frame-%04d.ext" pattern demuxer, which requires one shared extension.
+  const listLines = frameNames.flatMap((name, i) =>
+    i === frameNames.length - 1
+      ? [`file '${name}'`, `duration ${frameDuration}`, `file '${name}'`]
+      : [`file '${name}'`, `duration ${frameDuration}`],
+  );
+  await ffmpeg.writeFile(listName, new TextEncoder().encode(listLines.join("\n")));
+
+  await ffmpeg.exec([
+    "-f",
+    "concat",
+    "-safe",
+    "0",
+    "-i",
+    listName,
+    "-vf",
+    "scale=480:-1:flags=lanczos,palettegen",
+    paletteName,
+  ]);
+  await ffmpeg.exec([
+    "-f",
+    "concat",
+    "-safe",
+    "0",
+    "-i",
+    listName,
+    "-i",
+    paletteName,
+    "-filter_complex",
+    "scale=480:-1:flags=lanczos[x];[x][1:v]paletteuse",
+    outputName,
+  ]);
+
+  const data = await ffmpeg.readFile(outputName);
+  const bytes = data as Uint8Array;
+
+  for (const name of [...frameNames, listName, paletteName, outputName]) {
+    try {
+      await ffmpeg.deleteFile(name);
+    } catch {
+      // ignore missing files
+    }
+  }
+
+  return new Blob([bytes.buffer as ArrayBuffer], { type: "image/gif" });
+}
+
+export interface GifCompressOptions {
+  fps: number;
+  maxWidth: number;
+}
+
+export async function compressGif(ffmpeg: FFmpeg, file: File, options: GifCompressOptions): Promise<Blob> {
+  const inputName = `input-${Date.now()}.${file.name.split(".").pop() ?? "gif"}`;
+  const outputName = `output-${Date.now()}.gif`;
+  const paletteName = `palette-${Date.now()}.png`;
+
+  await ffmpeg.writeFile(inputName, new Uint8Array(await file.arrayBuffer()));
+  await ffmpeg.exec([
+    "-i",
+    inputName,
+    "-vf",
+    `fps=${options.fps},scale=${options.maxWidth}:-1:flags=lanczos,palettegen`,
+    paletteName,
+  ]);
+  await ffmpeg.exec([
+    "-i",
+    inputName,
+    "-i",
+    paletteName,
+    "-filter_complex",
+    `fps=${options.fps},scale=${options.maxWidth}:-1:flags=lanczos[x];[x][1:v]paletteuse`,
+    outputName,
+  ]);
+
+  const data = await ffmpeg.readFile(outputName);
+  const bytes = data as Uint8Array;
+
+  for (const name of [inputName, paletteName, outputName]) {
+    try {
+      await ffmpeg.deleteFile(name);
+    } catch {
+      // ignore missing files
+    }
+  }
+
+  return new Blob([bytes.buffer as ArrayBuffer], { type: "image/gif" });
 }
 
 export async function convertVideo(

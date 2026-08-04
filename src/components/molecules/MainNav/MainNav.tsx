@@ -1,5 +1,8 @@
+import type { ReactElement } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import MegaNavDropdown from "@/components/molecules/MegaNavDropdown/MegaNavDropdown";
+import { CONVERT_NAV, COMPRESS_NAV, OTHER_TOOLS_NAV } from "@/constants/megaNav";
 
 function CalendarIcon() {
   return (
@@ -41,12 +44,50 @@ function MarketplaceIcon() {
   );
 }
 
-const TABS = [
+const TABS_BEFORE_MEGA_NAV = [
   { label: "Kalender", href: "/masehi", matchPrefixes: ["/masehi", "/hijriah"], icon: CalendarIcon },
   { label: "Tools", href: "/tools", matchPrefixes: ["/tools"], icon: ToolsIcon },
+];
+
+const TABS_AFTER_MEGA_NAV = [
   { label: "Social Media", href: "/social-media-tools", matchPrefixes: ["/social-media-tools"], icon: SocialIcon },
   { label: "Marketplace", href: "/marketplace-tools", matchPrefixes: ["/marketplace-tools"], icon: MarketplaceIcon },
 ];
+
+const MEGA_NAV_TABS = [
+  { label: "Convert", columns: CONVERT_NAV },
+  { label: "Compress", columns: COMPRESS_NAV },
+  { label: "Other Tools", columns: OTHER_TOOLS_NAV },
+];
+
+function TabLink({
+  tab,
+  currentYear,
+  isActive,
+}: {
+  tab: { label: string; href: string; icon: () => ReactElement };
+  currentYear: number;
+  isActive: boolean;
+}) {
+  const href = tab.label === "Kalender" ? `${tab.href}/${currentYear}` : tab.href;
+  const Icon = tab.icon;
+
+  return (
+    <Link
+      href={href}
+      title={tab.label}
+      className={[
+        "flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-all sm:px-3.5",
+        isActive
+          ? "bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-sm"
+          : "text-slate-500 hover:bg-white hover:text-slate-900 hover:shadow-sm",
+      ].join(" ")}
+    >
+      <Icon />
+      <span className="hidden sm:inline">{tab.label}</span>
+    </Link>
+  );
+}
 
 export default function MainNav() {
   const router = useRouter();
@@ -54,28 +95,32 @@ export default function MainNav() {
 
   return (
     <nav className="flex max-w-full gap-1 overflow-x-auto rounded-full border border-slate-200 bg-slate-50 p-1">
-      {TABS.map((tab) => {
-        const isActive = tab.matchPrefixes.some((prefix) => router.pathname.startsWith(prefix));
-        const href = tab.label === "Kalender" ? `${tab.href}/${currentYear}` : tab.href;
-        const Icon = tab.icon;
+      {TABS_BEFORE_MEGA_NAV.map((tab) => (
+        <TabLink
+          key={tab.label}
+          tab={tab}
+          currentYear={currentYear}
+          isActive={tab.matchPrefixes.some((prefix) => router.pathname.startsWith(prefix))}
+        />
+      ))}
 
-        return (
-          <Link
-            key={tab.label}
-            href={href}
-            title={tab.label}
-            className={[
-              "flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-all sm:px-3.5",
-              isActive
-                ? "bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-sm"
-                : "text-slate-500 hover:bg-white hover:text-slate-900 hover:shadow-sm",
-            ].join(" ")}
-          >
-            <Icon />
-            <span className="hidden sm:inline">{tab.label}</span>
-          </Link>
-        );
-      })}
+      {MEGA_NAV_TABS.map((tab) => (
+        <MegaNavDropdown
+          key={tab.label}
+          label={tab.label}
+          columns={tab.columns}
+          isActive={tab.columns.some((column) => column.items.some((item) => item.href === router.pathname))}
+        />
+      ))}
+
+      {TABS_AFTER_MEGA_NAV.map((tab) => (
+        <TabLink
+          key={tab.label}
+          tab={tab}
+          currentYear={currentYear}
+          isActive={tab.matchPrefixes.some((prefix) => router.pathname.startsWith(prefix))}
+        />
+      ))}
     </nav>
   );
 }
