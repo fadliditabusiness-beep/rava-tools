@@ -307,6 +307,19 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
       { href: "/tools/breadcrumb-schema-generator", title: "Breadcrumb Schema Generator", description: "Buat structured data BreadcrumbList." },
     ],
   },
+  {
+    id: "website-tools",
+    title: "Website Tools",
+    icon: "🌐",
+    accent: "sky",
+    note: "Dikirim langsung dari browser kamu ke layanan publik (Google, Cloudflare, RDAP), tidak lewat server kami.",
+    tools: [
+      { href: "/tools/pagespeed-checker", title: "PageSpeed Checker", description: "Cek skor performa website pakai Google PageSpeed Insights." },
+      { href: "/tools/core-web-vitals", title: "Core Web Vitals", description: "Cek LCP, INP, & CLS website dari data Chrome UX Report." },
+      { href: "/tools/dns-lookup", title: "DNS Lookup", description: "Lihat record DNS (A, AAAA, MX, TXT, dll) dari suatu domain." },
+      { href: "/tools/whois", title: "WHOIS", description: "Cek info registrasi domain: registrar, tanggal daftar & kadaluarsa." },
+    ],
+  },
 ];
 
 export const TOTAL_TOOL_COUNT = TOOL_CATEGORIES.reduce((sum, cat) => sum + cat.tools.length, 0);
