@@ -66,7 +66,21 @@ export const HOLIDAY_SOURCE_DOCUMENTS: Record<number, CalendarApiSourceDocument[
       url: "https://www.kemenag.go.id/",
     },
   ],
-  2027: [],
+  2027: [
+    {
+      title:
+        "Keputusan Bersama Menteri Agama, Menteri Ketenagakerjaan, dan Menteri PANRB tentang Hari Libur Nasional dan Cuti Bersama Tahun 2027",
+      number: "1205 Tahun 2026 / 3 Tahun 2026 / 2 Tahun 2026",
+      publishedAt: "2026-09-15",
+      url: "https://kemenkopmk.go.id/sites/default/files/pengumuman/2026-09/SKB%20Libur%20Nasional%20dan%20Cuti%20Bersama%20Tahun%202027.pdf",
+    },
+  ],
+};
+
+/** Catatan tambahan per tahun, ikut dikirim di field `source.note`. */
+export const HOLIDAY_YEAR_NOTES: Record<number, string> = {
+  2027:
+    "18 hari libur nasional + 8 hari cuti bersama. Tanggal 1 Ramadan, Idulfitri, dan Iduladha 1448 H final lewat Keputusan Menteri Agama (sidang isbat), bukan oleh SKB ini.",
 };
 
 const BASE_SOURCE = {
@@ -94,6 +108,6 @@ export function getHolidaySource(year: number, hasData: boolean, isProvisional: 
     documents: HOLIDAY_SOURCE_DOCUMENTS[year] ?? [],
     note: isProvisional
       ? "Tanggal libur keagamaan bisa berubah saat SKB resmi terbit. Cek field isProvisional per hari libur."
-      : null,
+      : (HOLIDAY_YEAR_NOTES[year] ?? null),
   };
 }

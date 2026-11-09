@@ -1,8 +1,8 @@
 import type { Holiday } from "@/interfaces/calendar";
 
 // Sumber: SKB 3 Menteri (Menag, Menaker, Menpan-RB) & Keppres hari libur.
-// 2025 & 2026 sudah resmi/final. 2027 belum ada SKB resmi per Juli 2026 —
-// tanggal ditandai isProvisional dan berupa estimasi hisab (bisa berubah).
+// 2025, 2026, dan 2027 sudah final berdasarkan SKB resmi.
+// Tahun tanpa SKB ditandai lewat PROVISIONAL_YEARS + flag isProvisional per entri.
 
 const HOLIDAYS_2025: Holiday[] = [
   { date: "2025-01-01", name: "Tahun Baru Masehi 2025", category: "national" },
@@ -63,33 +63,38 @@ const HOLIDAYS_2026: Holiday[] = [
   { date: "2026-12-25", name: "Hari Raya Natal", category: "national" },
 ];
 
-// Belum ada SKB resmi untuk 2027 (per Juli 2026). Tanggal di bawah adalah
-// estimasi hisab dari sumber pihak ketiga dan bisa berubah saat SKB terbit.
+// SKB 3 Menteri Nomor 1205 Tahun 2026, Nomor 3 Tahun 2026, Nomor 2 Tahun 2026
+// tentang Hari Libur Nasional dan Cuti Bersama Tahun 2027, ditetapkan 15 September 2026.
+// 18 hari libur nasional + 8 hari cuti bersama.
+// Catatan: tanggal 1 Ramadan, Idulfitri, dan Iduladha 1448 H tetap ditetapkan lewat
+// Keputusan Menteri Agama (sidang isbat), bukan oleh SKB ini.
 const HOLIDAYS_2027: Holiday[] = [
-  { date: "2027-01-01", name: "Tahun Baru Masehi 2027", category: "national" },
-  { date: "2027-01-05", name: "Isra Mikraj Nabi Muhammad SAW (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-02-05", name: "Cuti Bersama Tahun Baru Imlek (perkiraan)", category: "cuti-bersama", isProvisional: true },
-  { date: "2027-02-06", name: "Tahun Baru Imlek 2578 Kongzili (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-03-08", name: "Cuti Bersama Hari Suci Nyepi (perkiraan)", category: "cuti-bersama", isProvisional: true },
-  { date: "2027-03-09", name: "Hari Suci Nyepi (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-03-10", name: "Hari Raya Idul Fitri 1448 H hari ke-1 (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-03-11", name: "Hari Raya Idul Fitri 1448 H hari ke-2 (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-03-12", name: "Cuti Bersama Idul Fitri (perkiraan)", category: "cuti-bersama", isProvisional: true },
-  { date: "2027-03-26", name: "Wafat Yesus Kristus (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-03-28", name: "Kebangkitan Yesus Kristus / Paskah (perkiraan)", category: "national", isProvisional: true },
+  { date: "2027-01-01", name: "Tahun Baru 2027 Masehi", category: "national" },
+  { date: "2027-01-05", name: "Isra Mikraj Nabi Muhammad SAW 1448 Hijriah", category: "national" },
+  { date: "2027-02-05", name: "Cuti Bersama Tahun Baru Imlek 2578 Kongzili", category: "cuti-bersama" },
+  { date: "2027-02-06", name: "Tahun Baru Imlek 2578 Kongzili", category: "national" },
+  { date: "2027-03-08", name: "Hari Suci Nyepi (Tahun Baru Saka 1949)", category: "national" },
+  { date: "2027-03-09", name: "Cuti Bersama Hari Raya Idulfitri 1448 Hijriah", category: "cuti-bersama" },
+  { date: "2027-03-10", name: "Idulfitri 1448 Hijriah (hari ke-1)", category: "national" },
+  { date: "2027-03-11", name: "Idulfitri 1448 Hijriah (hari ke-2)", category: "national" },
+  { date: "2027-03-12", name: "Cuti Bersama Hari Raya Idulfitri 1448 Hijriah", category: "cuti-bersama" },
+  { date: "2027-03-15", name: "Cuti Bersama Hari Raya Idulfitri 1448 Hijriah", category: "cuti-bersama" },
+  { date: "2027-03-25", name: "Cuti Bersama Wafat Yesus Kristus", category: "cuti-bersama" },
+  { date: "2027-03-26", name: "Wafat Yesus Kristus", category: "national" },
+  { date: "2027-03-28", name: "Hari Kebangkitan Yesus Kristus (Paskah)", category: "national" },
   { date: "2027-05-01", name: "Hari Buruh Internasional", category: "national" },
-  { date: "2027-05-06", name: "Kenaikan Yesus Kristus (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-05-07", name: "Cuti Bersama Kenaikan Yesus Kristus (perkiraan)", category: "cuti-bersama", isProvisional: true },
-  { date: "2027-05-17", name: "Hari Raya Idul Adha (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-05-18", name: "Cuti Bersama Idul Adha (perkiraan)", category: "cuti-bersama", isProvisional: true },
-  { date: "2027-05-20", name: "Hari Raya Waisak (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-05-21", name: "Cuti Bersama Hari Raya Waisak (perkiraan)", category: "cuti-bersama", isProvisional: true },
+  { date: "2027-05-06", name: "Kenaikan Yesus Kristus", category: "national" },
+  { date: "2027-05-17", name: "Iduladha 1448 Hijriah", category: "national" },
+  { date: "2027-05-18", name: "Cuti Bersama Iduladha 1448 Hijriah", category: "cuti-bersama" },
+  { date: "2027-05-19", name: "Cuti Bersama Waisak 2571 BE", category: "cuti-bersama" },
+  { date: "2027-05-20", name: "Hari Raya Waisak 2571 BE", category: "national" },
   { date: "2027-06-01", name: "Hari Lahir Pancasila", category: "national" },
-  { date: "2027-06-06", name: "1 Muharam, Tahun Baru Islam 1449 H (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-08-15", name: "Maulid Nabi Muhammad SAW (perkiraan)", category: "national", isProvisional: true },
-  { date: "2027-08-17", name: "Proklamasi Kemerdekaan RI", category: "national" },
-  { date: "2027-12-24", name: "Cuti Bersama Hari Raya Natal (perkiraan)", category: "cuti-bersama", isProvisional: true },
-  { date: "2027-12-25", name: "Hari Raya Natal", category: "national" },
+  { date: "2027-06-06", name: "1 Muharam Tahun Baru Islam 1449 Hijriah", category: "national" },
+  { date: "2027-08-15", name: "Maulid Nabi Muhammad SAW", category: "national" },
+  { date: "2027-08-17", name: "Proklamasi Kemerdekaan", category: "national" },
+  { date: "2027-12-24", name: "Cuti Bersama Kelahiran Yesus Kristus (Natal)", category: "cuti-bersama" },
+  { date: "2027-12-25", name: "Kelahiran Yesus Kristus (Natal)", category: "national" },
+  { date: "2027-12-26", name: "Isra Mikraj Nabi Muhammad SAW 1449 Hijriah", category: "national" },
 ];
 
 export const HOLIDAYS_BY_YEAR: Record<number, Holiday[]> = {
@@ -98,8 +103,8 @@ export const HOLIDAYS_BY_YEAR: Record<number, Holiday[]> = {
   2027: HOLIDAYS_2027,
 };
 
-// Tahun yang datanya masih estimasi (belum ada SKB resmi).
-export const PROVISIONAL_YEARS: readonly number[] = [2027];
+// Tahun yang datanya masih estimasi (belum ada SKB resmi). Kosong: 2025-2027 sudah ber-SKB.
+export const PROVISIONAL_YEARS: readonly number[] = [];
 
 export function getHolidayMap(): Map<string, Holiday[]> {
   const map = new Map<string, Holiday[]>();
